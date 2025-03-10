@@ -6,6 +6,7 @@ use App\Models\LevelModel;
 use App\Models\UserModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Monolog\Level;
 use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
@@ -23,12 +24,19 @@ class UserController extends Controller
 
         $activeMenu = 'user'; // untuk set menu yang sedang aktif
 
-        return view('user.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu]);
+        $level = LevelModel::all(); // ambil data level untuk filter level
+
+        return view('user.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu, 'level' => $level]);
     }
 
     public function list(Request $request)
     {
         $users = UserModel::select('user_id', 'username', 'nama', 'level_id')->with('level');
+
+        // Filter data user berdasarkan level_id
+        if ($request->level_id) {
+            $users->where('level_id', $request->level_id);
+        }
 
         return DataTables::of($users)->addIndexColumn()->addColumn('aksi', function ($user) {
             $btn  = '<a href="' . url('/user/' . $user->user_id) . '" class="btn btn-info btn-sm">Detail</a> ';
