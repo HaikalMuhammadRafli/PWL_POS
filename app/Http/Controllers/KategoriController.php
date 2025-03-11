@@ -135,7 +135,7 @@ class KategoriController extends Controller
 
             return redirect('/kategori')->with('success', 'Data kategori berhasil dihapus!');
         } catch (\Illuminate\Database\QueryException $e) {
-            return redirect('/kategori')->with('error', 'Data kategori gagal dihapus!');
+            return redirect('/kategori')->with('error', 'Data kategori gagal dihapus karena masih terdapat tabel lain yang terkait dengan data ini!');
         }
     }
 }

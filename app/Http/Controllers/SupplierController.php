@@ -158,7 +158,7 @@ class SupplierController extends Controller
 
             return redirect('/supplier')->with('success', 'Data supplier berhasil dihapus!');
         } catch (\Illuminate\Database\QueryException $e) {
-            return redirect('/supplier')->with('error', 'Data supplier gagal dihapus!');
+            return redirect('/supplier')->with('error', 'Data supplier gagal dihapus karena masih terdapat tabel lain yang terkait dengan data ini!');
         }
     }
 }
