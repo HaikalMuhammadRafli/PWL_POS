@@ -154,7 +154,7 @@ class SupplierController extends Controller
         }
 
         try {
-            LevelModel::destroy($id);
+            SupplierModel::destroy($id);
 
             return redirect('/supplier')->with('success', 'Data supplier berhasil dihapus!');
         } catch (\Illuminate\Database\QueryException $e) {

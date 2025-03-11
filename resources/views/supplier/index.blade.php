@@ -71,7 +71,7 @@
             },
 
             {
-                data: "supplier_nama",
+                data: "supplier_alamat",
                 className: "",
                 orderable: true,
                 searchable: true
