@@ -98,7 +98,7 @@
                     orderable: false,
                     searchable: false,
                     render: function (data, type, row) {
-                        return new Intl.NumberFormat("id-ID").format(data);
+                        return "Rp " + new Intl.NumberFormat("id-ID").format(data);
                     }
                 },
 
@@ -108,7 +108,7 @@
                     orderable: false,
                     searchable: false,
                     render: function (data, type, row) {
-                        return new Intl.NumberFormat("id-ID").format(data);
+                        return "Rp " + new Intl.NumberFormat("id-ID").format(data);
                     }
                 },
 
