@@ -84,6 +84,13 @@ class UserController extends Controller
         return redirect('/user')->with('success', 'Data user berhasil disimpan!');
     }
 
+    public function create_ajax()
+    {
+        $level = LevelModel::select('level_id', 'nama')->get();
+
+        return view('user.create_ajax')->with('level', $level);
+    }
+
     public function show(string $id)
     {
         $breadcrumb = (object) [
