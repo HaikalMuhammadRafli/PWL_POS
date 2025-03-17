@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\KategoriModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
 use function Laravel\Prompts\table;
@@ -71,6 +72,37 @@ class KategoriController extends Controller
         return redirect('/kategori')->with('success', 'Data kategori berhasil ditambahkan.');
     }
 
+    public function create_ajax()
+    {
+        return view('kategori.create_ajax');
+    }
+
+    public function store_ajax(Request $request)
+    {
+        if ($request->ajax() || $request->wantsJson()) {
+            $rules = [
+                'kategori_kode' => 'required|string|max:10|unique:m_kategori,kategori_kode',
+                'kategori_nama' => 'required|string|max:100',
+            ];
+
+            $validator = Validator::make($request->all(), $rules);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status'  => false,
+                    'message' => 'Validasi Gagal',
+                    'msgField' => $validator->errors(),
+                ]);
+            }
+
+            KategoriModel::create($request->all());
+            return response()->json([
+                'status' => true,
+                'message' => 'Data user berhasil disimpan'
+            ]);
+        }
+    }
+
     public function show(string $id)
     {
         $breadcrumb = (object) [
@@ -122,6 +154,48 @@ class KategoriController extends Controller
         return redirect('/kategori')->with('success', 'Data kategori berhasil diubah!');
     }
 
+    public function edit_ajax(string $id)
+    {
+        $kategori = KategoriModel::find($id);
+
+        return view('kategori.edit_ajax', ['kategori' => $kategori]);
+    }
+
+    public function update_ajax(Request $request, string $id)
+    {
+        if ($request->ajax() || $request->wantsJson()) {
+            $rules = [
+                'kategori_kode' => 'required|string|max:10|unique:m_kategori,kategori_kode,' . $id . ',kategori_id',
+                'kategori_nama' => 'required|string|max:100',
+            ];
+
+            $validator = Validator::make($request->all(), $rules);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status'  => false,
+                    'message' => 'Validasi Gagal',
+                    'msgField' => $validator->errors(),
+                ]);
+            }
+
+            $check = KategoriModel::find($id);
+            if ($check) {
+                $check->update($request->all());
+                return response()->json([
+                    'status'  => true,
+                    'message' => 'Data berhasil diupdate'
+                ]);
+            } else {
+                return response()->json([
+                    'status'  => false,
+                    'message' => 'Data tidak ditemukan'
+                ]);
+            }
+        }
+        return redirect('/');
+    }
+
     public function destroy(string $id)
     {
         $check = KategoriModel::find($id);
@@ -137,5 +211,32 @@ class KategoriController extends Controller
         } catch (\Illuminate\Database\QueryException $e) {
             return redirect('/kategori')->with('error', 'Data kategori gagal dihapus karena masih terdapat tabel lain yang terkait dengan data ini!');
         }
+    }
+
+    public function confirm_ajax(string $id)
+    {
+        $kategori = KategoriModel::find($id);
+
+        return view('kategori.confirm_ajax', ['kategori' => $kategori]);
+    }
+
+    public function delete_ajax(Request $request, $id)
+    {
+        if ($request->ajax() || $request->wantsJson()) {
+            $kategori = KategoriModel::find($id);
+            if ($kategori) {
+                $kategori->delete();
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Data berhasil dihapus'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Data tidak ditemukan'
+                ]);
+            }
+        }
+        return redirect('/');
     }
 }
