@@ -98,7 +98,7 @@ class KategoriController extends Controller
             KategoriModel::create($request->all());
             return response()->json([
                 'status' => true,
-                'message' => 'Data user berhasil disimpan'
+                'message' => 'Data kategori berhasil disimpan'
             ]);
         }
     }

@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\LevelModel;
 use App\Models\UserModel;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Monolog\Level;
 use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
@@ -193,7 +191,7 @@ class UserController extends Controller
         return view('user.edit_ajax', ['user' => $user, 'level' => $level]);
     }
 
-    public function update_ajax(Request $request, $id)
+    public function update_ajax(Request $request, string $id)
     {
         // cek apakah request dari ajax
         if ($request->ajax() || $request->wantsJson()) {
@@ -261,7 +259,7 @@ class UserController extends Controller
         return view('user.confirm_ajax', ['user' => $user]);
     }
 
-    public function delete_ajax(Request $request, $id)
+    public function delete_ajax(Request $request, string $id)
     {
         // cek apakah request dari ajax
         if ($request->ajax() || $request->wantsJson()) {

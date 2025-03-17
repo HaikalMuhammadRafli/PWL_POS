@@ -108,7 +108,7 @@ class SupplierController extends Controller
             SupplierModel::create($request->all());
             return response()->json([
                 'status' => true,
-                'message' => 'Data user berhasil disimpan'
+                'message' => 'Data supplier berhasil disimpan'
             ]);
         }
     }
