@@ -6,7 +6,7 @@
             <h3 class="card-title">{{ $page->title }}</h3>
             <div class="card-tools">
                 <a class="btn btn-sm btn-primary mt-1" href="{{ url('user/create') }}">Tambah</a>
-                <button onclick="modalAction('{{ url('user/create_ajax') }}')" class="btn btn-sm btn-success mt-1"> Tambah
+                <button onclick="modalAction('{{ url('user/create_ajax') }}')" class="btn btn-sm btn-success mt-1">Tambah
                     Ajax</button>
             </div>
         </div>
@@ -56,14 +56,15 @@
 
 @push('js')
     <script>
-        function modalAction(url) {
-            $('#myModal').load(url, function()) {
+        function modalAction(url = '') {
+            $('#myModal').load(url, function() {
                 $(this).modal('show');
-            }
+            });
         }
 
+        var dataUser;
         $(document).ready(function() {
-            var dataUser = $('#table_user').DataTable({
+            dataUser = $('#table_user').DataTable({
                 // serverSide: true, jika ingin menggunakan server side processing
                 serverSide: true,
                 ajax: {
