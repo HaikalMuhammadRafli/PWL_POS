@@ -223,9 +223,9 @@ class LevelController extends Controller
     public function delete_ajax(Request $request, $id)
     {
         if ($request->ajax() || $request->wantsJson()) {
-            $user = LevelModel::find($id);
-            if ($user) {
-                $user->delete();
+            $level = LevelModel::find($id);
+            if ($level) {
+                $level->delete();
                 return response()->json([
                     'status' => true,
                     'message' => 'Data berhasil dihapus'
