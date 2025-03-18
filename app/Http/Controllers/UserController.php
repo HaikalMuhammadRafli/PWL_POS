@@ -68,6 +68,13 @@ class UserController extends Controller
         return view('user.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu, 'level' => $level]);
     }
 
+    public function create_ajax()
+    {
+        $level = LevelModel::select('level_id', 'level_nama')->get();
+
+        return view('user.create_ajax')->with('level', $level);
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -85,13 +92,6 @@ class UserController extends Controller
         ]);
 
         return redirect('/user')->with('success', 'Data user berhasil disimpan!');
-    }
-
-    public function create_ajax()
-    {
-        $level = LevelModel::select('level_id', 'level_nama')->get();
-
-        return view('user.create_ajax')->with('level', $level);
     }
 
     public function store_ajax(Request $request)
