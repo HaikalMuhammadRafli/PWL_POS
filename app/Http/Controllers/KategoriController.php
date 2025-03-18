@@ -4,11 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\KategoriModel;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
-
-use function Laravel\Prompts\table;
 
 class KategoriController extends Controller
 {
@@ -33,10 +30,14 @@ class KategoriController extends Controller
         $kategori = KategoriModel::select('kategori_id', 'kategori_kode', 'kategori_nama');
 
         return DataTables::of($kategori)->addIndexColumn()->addColumn('aksi', function ($kategori) {
-            $btn  = '<a href="' . url('/kategori/' . $kategori->kategori_id) . '" class="btn btn-info btn-sm">Detail</a> ';
-            $btn .= '<a href="' . url('/kategori/' . $kategori->kategori_id . '/edit') . '" class="btn btn-warning btn-sm">Edit</a> ';
-            $btn .= '<form class="d-inline-block" method="POST" action="' . url('/kategori/' . $kategori->kategori_id) . '">' . csrf_field() . method_field('DELETE') .
-                '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakit menghapus data ini?\');">Hapus</button></form>';
+            // $btn  = '<a href="' . url('/kategori/' . $kategori->kategori_id) . '" class="btn btn-info btn-sm">Detail</a> ';
+            // $btn .= '<a href="' . url('/kategori/' . $kategori->kategori_id . '/edit') . '" class="btn btn-warning btn-sm">Edit</a> ';
+            // $btn .= '<form class="d-inline-block" method="POST" action="' . url('/kategori/' . $kategori->kategori_id) . '">' . csrf_field() . method_field('DELETE') .
+            //     '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakit menghapus data ini?\');">Hapus</button></form>';
+
+            $btn  = '<button onclick="modalAction(\'' . url('/kategori/' . $kategori->kategori_id . '/show_ajax') . '\')" class="btn btn-info btn-sm">Detail</button> ';
+            $btn .= '<button onclick="modalAction(\'' . url('/kategori/' . $kategori->kategori_id . '/edit_ajax') . '\')" class="btn btn-warning btn-sm">Edit</button> ';
+            $btn .= '<button onclick="modalAction(\'' . url('/kategori/' . $kategori->kategori_id . '/delete_ajax') . '\')"  class="btn btn-danger btn-sm">Hapus</button> ';
             return $btn;
         })->rawColumns(['aksi'])->make(true);
     }
@@ -121,6 +122,13 @@ class KategoriController extends Controller
         return view('kategori.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu, 'kategori' => $kategori]);
     }
 
+    public function show_ajax(string $id)
+    {
+        $kategori = KategoriModel::find($id);
+
+        return view('kategori.show_ajax', ['kategori' => $kategori]);
+    }
+
     public function edit(string $id)
     {
         $breadcrumb = (object) [
@@ -193,7 +201,7 @@ class KategoriController extends Controller
                 ]);
             }
         }
-        return redirect('/');
+        return redirect('/kategori');
     }
 
     public function destroy(string $id)
@@ -222,21 +230,28 @@ class KategoriController extends Controller
 
     public function delete_ajax(Request $request, $id)
     {
-        if ($request->ajax() || $request->wantsJson()) {
-            $kategori = KategoriModel::find($id);
-            if ($kategori) {
-                $kategori->delete();
-                return response()->json([
-                    'status' => true,
-                    'message' => 'Data berhasil dihapus'
-                ]);
-            } else {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Data tidak ditemukan'
-                ]);
+        try {
+            if ($request->ajax() || $request->wantsJson()) {
+                $kategori = KategoriModel::find($id);
+                if ($kategori) {
+                    $kategori->delete();
+                    return response()->json([
+                        'status' => true,
+                        'message' => 'Data berhasil dihapus'
+                    ]);
+                } else {
+                    return response()->json([
+                        'status' => false,
+                        'message' => 'Data tidak ditemukan'
+                    ]);
+                }
             }
+        } catch (\Illuminate\Database\QueryException $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data kategori gagal dihapus karena masih terdapat tabel lain yang terkait dengan data ini'
+            ]);
         }
-        return redirect('/');
+        return redirect('/kategori');
     }
 }

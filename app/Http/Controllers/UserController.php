@@ -143,6 +143,13 @@ class UserController extends Controller
         return view('user.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu, 'user' => $user]);
     }
 
+    public function show_ajax(Request $request)
+    {
+        $user = UserModel::with('level')->find($request->id);
+
+        return view('user.show_ajax', ['user' => $user]);
+    }
+
     public function edit(string $id)
     {
         $breadcrumb = (object) [
@@ -231,7 +238,7 @@ class UserController extends Controller
                 ]);
             }
         }
-        return redirect('/');
+        return redirect('/user');
     }
 
     public function destroy(string $id)
@@ -261,22 +268,29 @@ class UserController extends Controller
 
     public function delete_ajax(Request $request, string $id)
     {
-        // cek apakah request dari ajax
-        if ($request->ajax() || $request->wantsJson()) {
-            $user = UserModel::find($id);
-            if ($user) {
-                $user->delete();
-                return response()->json([
-                    'status' => true,
-                    'message' => 'Data berhasil dihapus'
-                ]);
-            } else {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Data tidak ditemukan'
-                ]);
+        try {
+            // cek apakah request dari ajax
+            if ($request->ajax() || $request->wantsJson()) {
+                $user = UserModel::find($id);
+                if ($user) {
+                    $user->delete();
+                    return response()->json([
+                        'status' => true,
+                        'message' => 'Data berhasil dihapus'
+                    ]);
+                } else {
+                    return response()->json([
+                        'status' => false,
+                        'message' => 'Data tidak ditemukan'
+                    ]);
+                }
             }
+        } catch (\Illuminate\Database\QueryException $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data user gagal dihapus karena masih terdapat tabel lain yang terkait dengan data ini'
+            ]);
         }
-        return redirect('/');
+        return redirect('/user');
     }
 }
