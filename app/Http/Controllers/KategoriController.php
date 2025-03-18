@@ -102,6 +102,7 @@ class KategoriController extends Controller
                 'message' => 'Data kategori berhasil disimpan'
             ]);
         }
+        return redirect('/kategori');
     }
 
     public function show(string $id)

@@ -122,7 +122,7 @@ class UserController extends Controller
                 'message' => 'Data user berhasil disimpan'
             ]);
         }
-        redirect('/');
+        redirect('/user');
     }
 
     public function show(string $id)

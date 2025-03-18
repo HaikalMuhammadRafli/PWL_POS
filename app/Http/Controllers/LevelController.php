@@ -103,6 +103,7 @@ class LevelController extends Controller
                 'message' => 'Data level berhasil disimpan'
             ]);
         }
+        return redirect('/level');
     }
 
     public function show(string $id)
