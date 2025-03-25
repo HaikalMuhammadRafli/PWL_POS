@@ -67,7 +67,7 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
-    Route::middleware(['authorize:ADM, MNG'])->group(function () {
+    Route::middleware(['authorize:ADM,MNG'])->group(function () {
         Route::group(['prefix' => 'kategori'], function () {
             Route::get('/', [KategoriController::class, 'index']);
             Route::post('/list', [KategoriController::class, 'list']);
