@@ -39,6 +39,8 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/', [UserController::class, 'store']);
             Route::get('/create_ajax', [UserController::class, 'create_ajax']);
             Route::post('/ajax', [UserController::class, 'store_ajax']);
+            Route::get('/import', [UserController::class, 'import']);
+            Route::post('/import_ajax', [UserController::class, 'import_ajax']);
             Route::get('/{id}', [UserController::class, 'show']);
             Route::get('/{id}/show_ajax', [UserController::class, 'show_ajax']);
             Route::get('/{id}/edit', [UserController::class, 'edit']);
@@ -57,6 +59,8 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/', [LevelController::class, 'store']);
             Route::get('/create_ajax', [LevelController::class, 'create_ajax']);
             Route::post('/ajax', [LevelController::class, 'store_ajax']);
+            Route::get('/import', [LevelController::class, 'import']);
+            Route::post('/import_ajax', [LevelController::class, 'import_ajax']);
             Route::get('/{id}', [LevelController::class, 'show']);
             Route::get('/{id}/show_ajax', [LevelController::class, 'show_ajax']);
             Route::get('/{id}/edit', [LevelController::class, 'edit']);
@@ -77,6 +81,8 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/', [KategoriController::class, 'store']);
             Route::get('/create_ajax', [KategoriController::class, 'create_ajax']);
             Route::post('/ajax', [KategoriController::class, 'store_ajax']);
+            Route::get('/import', [KategoriController::class, 'import']);
+            Route::post('/import_ajax', [KategoriController::class, 'import_ajax']);
             Route::get('/{id}', [KategoriController::class, 'show']);
             Route::get('/{id}/show_ajax', [KategoriController::class, 'show_ajax']);
             Route::get('/{id}/edit', [KategoriController::class, 'edit']);
@@ -96,6 +102,8 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/', [SupplierController::class, 'store']);
             Route::get('/create_ajax', [SupplierController::class, 'create_ajax']);
             Route::post('/ajax', [SupplierController::class, 'store_ajax']);
+            Route::get('/import', [SupplierController::class, 'import']);
+            Route::post('/import_ajax', [SupplierController::class, 'import_ajax']);
             Route::get('/{id}', [SupplierController::class, 'show']);
             Route::get('/{id}/show_ajax', [SupplierController::class, 'show_ajax']);
             Route::get('/{id}/edit', [SupplierController::class, 'edit']);
