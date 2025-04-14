@@ -114,6 +114,10 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/', [BarangController::class, 'store']);
             Route::get('/create_ajax', [BarangController::class, 'create_ajax']);
             Route::post('/ajax', [BarangController::class, 'store_ajax']);
+            Route::get('/import', [BarangController::class, 'import']);
+            Route::post('/import_ajax', [BarangController::class, 'import_ajax']);
+            Route::get('/export_excel', [BarangController::class, 'export_excel']);
+            Route::get('/export_pdf', [BarangController::class, 'export_pdf']);
             Route::get('/{id}', [BarangController::class, 'show']);
             Route::get('/{id}/show_ajax', [BarangController::class, 'show_ajax']);
             Route::get('/{id}/edit', [BarangController::class, 'edit']);
@@ -123,10 +127,6 @@ Route::middleware(['auth'])->group(function () {
             Route::delete('/{id}', [BarangController::class, 'destroy']);
             Route::get('/{id}/delete_ajax', [BarangController::class, 'confirm_ajax']);
             Route::delete('/{id}/delete_ajax', [BarangController::class, 'delete_ajax']);
-            Route::get('/barang/import', [BarangController::class, 'import']);
-            Route::post('/barang/import_ajax', [BarangController::class, 'import_ajax']);
-            Route::get('/barang/export_excel', [BarangController::class, 'export_excel']);
-            Route::get('/barang/export_pdf', [BarangController::class, 'export_pdf']);
         });
     });
 
