@@ -37,15 +37,13 @@
                 },
             },
             submitHandler: function(form) {
-                var formData = new FormData(form); // Jadikan form ke FormData untuk
-                menghandle file
+                var formData = new FormData(form); // Jadikan form ke FormData untuk menghandle file
 
                 $.ajax({
                     url: form.action,
                     type: form.method,
                     data: formData, // Data yang dikirim berupa FormData
-                    processData: false, // setting processData dan contentType ke false,
-                    untuk menghandle file
+                    processData: false, // setting processData dan contentType ke false, untuk menghandle file
                     contentType: false,
                     success: function(response) {
                         if (response.status) { // jika sukses
