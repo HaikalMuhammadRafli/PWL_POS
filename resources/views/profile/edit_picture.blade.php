@@ -2,7 +2,7 @@
     data-profile-form>
     @method('PUT')
     @csrf
-    <div id="modal-master" class="modal-dialog modal-lg" role="document">
+    <div id="myModal" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modal-title">Update Profile Picture</h5>
