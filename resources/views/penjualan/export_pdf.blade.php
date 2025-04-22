@@ -105,6 +105,7 @@
                     <th class="text-center">Barang</th>
                     <th class="text-center">Harga</th>
                     <th class="text-center">Jumlah</th>
+                    <th class="text-center">Total</th>
                 </tr>
             </thead>
             <tbody>
@@ -129,8 +130,12 @@
                             <td class="text-center">{{ $detail->barang->barang_nama }}</td>
                             <td class="text-center">{{ $detail->harga }}</td>
                             <td class="text-center">{{ $detail->jumlah }}</td>
-                        </tr>
+                            @if ($i == 0)
+                                <td class="text-center" rowspan="{{ count($penjualan->detail) }}">
+                                    {{ $penjualan->detail()->sum('harga') }}</td>
+                            @endif
                     @endforeach
+                    </tr>
                 @endforeach
             </tbody>
         </table>

@@ -340,7 +340,12 @@
                 total += parseFloat($(this).val()) || 0;
             });
 
-            $('#total-amount').text(total);
+            var formattedTotal = new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR'
+            }).format(total);
+
+            $('#total-amount').text(formattedTotal);
         }
     </script>
 @endempty

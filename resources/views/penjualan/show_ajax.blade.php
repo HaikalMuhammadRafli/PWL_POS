@@ -96,14 +96,20 @@
     });
 
     function calculateTotal() {
-        let total = 0;
-        $('.detail-harga').each(function() {
-            let harga = $(this).text().replace(/\./g, '').replace(/,/g, '.');
-            total += parseFloat(harga);
-        });
-        $('#total-amount').text(total.toLocaleString('id-ID', {
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0
-        }));
-    }
+    let total = 0;
+    $('.detail-harga').each(function() {
+        let harga = $(this).text()
+            .replace(/[^0-9.,]/g, '')
+            .replace(/\./g, '')
+            .replace(/,/g, '.');
+
+        total += parseFloat(harga) || 0;
+    });
+
+    $('#total-amount').text(total.toLocaleString('id-ID', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+    }));
+}
+
 </script>
