@@ -36,6 +36,6 @@ class BarangModel extends Model
 
     public function getStok()
     {
-        return $this->stok()->sum('stok_jumlah');
+        return $this->stok()->sum('stok_jumlah') - $this->detail()->sum('jumlah');
     }
 }
