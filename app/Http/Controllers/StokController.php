@@ -39,18 +39,6 @@ class StokController extends Controller
     {
         $stoks = StokModel::select('stok_id', 'supplier_id', 'barang_id', 'user_id', 'stok_tanggal', 'stok_jumlah')->with(['barang', 'supplier', 'user']);
 
-        if ($request->supplier_id) {
-            $stoks->where('supplier_id', $request->supplier_id);
-        }
-
-        if ($request->barang_id) {
-            $stoks->where('barang_id', $request->barang_id);
-        }
-
-        if ($request->user_id) {
-            $stoks->where('user_id', $request->user_id);
-        }
-
         return DataTables::of($stoks)->addIndexColumn()->addColumn('aksi', function ($stok) {
             $btn = '<button onclick="modalAction(\'' . url('/stok/' . $stok->stok_id . '/show_ajax') . '\')" class="btn btn-info btn-sm">Detail</button> ';
             $btn .= '<button onclick="modalAction(\'' . url('/stok/' . $stok->stok_id . '/edit_ajax') . '\')" class="btn btn-warning btn-sm">Edit</button> ';

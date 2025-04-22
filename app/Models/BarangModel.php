@@ -23,4 +23,19 @@ class BarangModel extends Model
     {
         return $this->belongsTo(KategoriModel::class, 'kategori_id', 'kategori_id');
     }
+
+    public function stok()
+    {
+        return $this->hasMany(StokModel::class, 'barang_id', 'barang_id');
+    }
+
+    public function detail()
+    {
+        return $this->hasMany(PenjualanDetailModel::class, 'barang_id', 'barang_id');
+    }
+
+    public function getStok()
+    {
+        return $this->stok()->sum('stok_jumlah');
+    }
 }
