@@ -10,8 +10,8 @@
                     Excel</a>
                 <a href="{{ url('barang/export_pdf') }}" class="btn btn-warning"><i class="fa fa-file-pdf"></i> Export
                     Pdf</a>
-                <button onclick="modalAction('{{ url('barang/create_ajax') }}')" class="btn btn-sm btn-success mt-1">Tambah
-                    Ajax</button>
+                <button onclick="modalAction('{{ url('barang/create_ajax') }}')" class="btn btn-success"><i
+                        class="fa-solid fa-plus"></i> Tambah Ajax</button>
             </div>
         </div>
         <div class="card-body">
