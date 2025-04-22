@@ -77,7 +77,7 @@
 <body>
     <table class="border-bottom-header">
         <tr>
-            <td class="text-center" style="width: 100px; height: 100px;"><img src="{{ asset('polinema-bw.png') }}"
+            <td class="text-center" style="width: 100px; height: 100px;"><img src="{{ public_path('polinema-bw.png') }}"
                     style="width: 80px; height: 80px;"></td>
             <td width="85%">
                 <span class="text-center d-block font-11 font-bold mb-1">KEMENTERIAN
