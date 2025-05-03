@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,6 +15,7 @@ class BarangModel extends Model
     protected $fillable = [
         'barang_kode',
         'barang_nama',
+        'barang_image',
         'harga_beli',
         'harga_jual',
         'kategori_id'
@@ -37,5 +39,12 @@ class BarangModel extends Model
     public function getStok()
     {
         return $this->stok()->sum('stok_jumlah') - $this->detail()->sum('jumlah');
+    }
+
+    protected function barangImage(): Attribute
+    {
+        return Attribute::make(
+            get: fn($barang_image) => url('/storage/barangs/' . $barang_image),
+        );
     }
 }
